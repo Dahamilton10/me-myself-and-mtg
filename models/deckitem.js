@@ -9,7 +9,7 @@
 module.exports = function (sequelize, DataTypes) {
   const DeckItem = sequelize.define('DeckItem', {
     id: {
-      type: DataTypes.int,
+      type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
       autoIncrement: true,
