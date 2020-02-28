@@ -12,6 +12,28 @@ module.exports = function (sequelize, DataTypes) {
       unique: true,
       autoIncrement: true,
     },
+    owner: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true,
+    },
   });
+
+  Deck.associate = function (models) {
+    Deck.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
+  // Deck.associate = function (models) {
+  //   Deck.hasMany(models.DeckItem, {
+  //     foreignKey: {
+  //       allowNull: false,
+  //     },
+  //   });
+  // };
+
   return Deck;
 };
