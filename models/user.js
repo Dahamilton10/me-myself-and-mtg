@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable func-names */
 const bcrypt = require('bcryptjs');
 
 module.exports = function (sequelize, DataTypes) {
