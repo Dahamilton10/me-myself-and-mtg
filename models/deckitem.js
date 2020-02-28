@@ -8,12 +8,38 @@
 
 module.exports = function (sequelize, DataTypes) {
   const DeckItem = sequelize.define('DeckItem', {
-    id: {
+    deck_ID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
-      autoIncrement: true,
+      unique: false,
+    },
+    card_ID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: false,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: false,
     },
   });
+
+  DeckItem.associate = function (models) {
+    DeckItem.belongsTo(models.Deck, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
+  DeckItem.associate = function (models) {
+    DeckItem.belongsTo(models.Card, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
   return DeckItem;
 };

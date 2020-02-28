@@ -27,13 +27,13 @@ module.exports = function (sequelize, DataTypes) {
     });
   };
 
-  // Deck.associate = function (models) {
-  //   Deck.hasMany(models.DeckItem, {
-  //     foreignKey: {
-  //       allowNull: false,
-  //     },
-  //   });
-  // };
+  Deck.associate = function (models) {
+    Deck.hasMany(models.DeckItem, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
 
   return Deck;
 };

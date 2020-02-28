@@ -88,5 +88,14 @@ module.exports = function (sequelize, DataTypes) {
       unique: true,
     },
   });
+
+  Card.associate = function (models) {
+    Card.hasMany(models.DeckItem, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
   return Card;
 };
