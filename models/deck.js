@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
+      primaryKey: true,
       autoIncrement: true,
     },
     owner: {
