@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../AuthContext";
 import "../App.css";
-import { Container, Row, Button, Col } from "react-bootstrap";
+import { Container, Row, Button, Col, Card } from "react-bootstrap";
 import Axios from "axios";
+import CardDisplay from '../components/CardDisplay';
+import Search from '../components/Search';
+import DeckList from '../components/DeckList';
 
 function Home(props) {
-  
+
   const { isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
@@ -22,51 +25,66 @@ function Home(props) {
     <Container className="signup">
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
-          <h1>Home Page</h1>
-          {isAuth ? (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  setSecret('');
-                  logout();
-                }}
-              >
-                Logout
+          <Row
+            className='display-inline-block'
+          >
+            <Col>
+              <h1>Logo</h1>
+            </Col>
+            <Col>
+              <h1>Home Page</h1>
+            </Col>
+            <Col>
+              <Button>Manage</Button>
+              <Button>Create</Button>
+            </Col>
+            <Col>
+              {isAuth ? (
+                <>
+                  <Button
+                    className="m-1"
+                    onClick={e => {
+                      e.preventDefault();
+                      setSecret('');
+                      logout();
+                    }}
+                  >
+                    Logout
               </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/members");
-                }}
-              >
-                Members
+                  <Button
+                    className="m-1"
+                    onClick={e => {
+                      e.preventDefault();
+                      props.history.push("/members");
+                    }}
+                  >
+                    Members
               </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/login");
-                }}
-              >
-                Login
+                </>
+              ) : (
+                  <>
+                    <Button
+                      className="m-1"
+                      onClick={e => {
+                        e.preventDefault();
+                        props.history.push("/login");
+                      }}
+                    >
+                      Login
               </Button>
-              <Button
-                className="m-1"
-                onClick={e => {
-                  e.preventDefault();
-                  props.history.push("/signup");
-                }}
-              >
-                Signup
+                    <Button
+                      className="m-1"
+                      onClick={e => {
+                        e.preventDefault();
+                        props.history.push("/signup");
+                      }}
+                    >
+                      Signup
               </Button>
-            </>
-          )}
+                  </>
+                )}
+            </Col>
+          </Row>
           <Button
             className="m-1"
             onClick={e => {
@@ -81,6 +99,17 @@ function Home(props) {
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
           <h1>{secret}</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col md='2'>
+          <Search></Search>
+        </Col>
+        <Col md='8'>
+          <CardDisplay></CardDisplay>
+        </Col>
+        <Col md='2'>
+         <DeckList></DeckList>
         </Col>
       </Row>
     </Container>

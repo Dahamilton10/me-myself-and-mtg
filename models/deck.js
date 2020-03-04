@@ -13,11 +13,11 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true,
     },
-    owner: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
-    },
+    // owner: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   unique: true,
+    // },
   });
 
   Deck.associate = function (models) {
