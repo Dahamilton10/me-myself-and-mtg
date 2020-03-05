@@ -9,9 +9,23 @@ import DeckList from '../components/DeckList';
 
 function Home(props) {
 
+  const [cardList, setCardList] = useState([]);
+
+  const [searchName, setSearchName] = useState('');
+
+  const [searchSet, setSearchSet] = useState('');
+
+  const [searchColors, setSearchColors] = useState('');
+
   const { isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
+
+  const getCards = async () => {
+    const response = Axios.get('/api/cards');
+    console.log(response);
+  }
+
 
   // this function is duplicated in the Members page component
   // consider refactor 
@@ -103,7 +117,18 @@ function Home(props) {
       </Row>
       <Row>
         <Col md='2'>
-          <Search></Search>
+          <Search
+          searchSet={searchSet}
+          setSearchSet={setSearchSet}
+
+          searchName={searchName}
+          setSearchName={setSearchName}
+
+          searchColors={searchColors}
+          setSearchColors={setSearchColors}
+          
+          getCards={getCards}
+          ></Search>
         </Col>
         <Col md='8'>
           <CardDisplay></CardDisplay>

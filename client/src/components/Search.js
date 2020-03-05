@@ -1,15 +1,34 @@
 import React from 'react';
+import { InputGroup, FormControl, Button, Form } from 'react-bootstrap';
 
 export default function Search(props) {
   return (
     <>
+      <InputGroup className='mb-3'>
+        <InputGroup.Prepend>
+          <Button
+            variant="outline-secondary"
+            onClick={props.getCards}
+            >Search</Button>
+        </InputGroup.Prepend>
+        <FormControl
+          placeholder="Search for a card"
+          aria-label="Card name search"
+          aria-describedby="card-name-search"
+          id="searchName"
+          onChange={(event) => props.setSearchName(event.target.value)}
+          value={props.searchName}
+        >
+        </FormControl>
+      </InputGroup>
+
       <div className="form-group">
-        <label for="set">Set</label>
+        <label htmlFor="set">Set</label>
         <select
           className="form-control"
           id="set"
-          onChange={(event) => props.set(event.target.value)}
-          value={props.set}
+          onChange={(event) => props.setSearchSet(event.target.value)}
+          value={props.searchSet}
         >
           <option value="all">- Select Set-</option>
           <option value="LEA">Alpha (Limited Edition)</option>
@@ -232,6 +251,18 @@ export default function Search(props) {
           <option value="CMR">Commander Legends</option>
         </select>
       </div>
+
+      <Form>
+        {['checkbox'].map(type => (
+          <div key={`inline-${type}`} className="mb-3">
+            <Form.Check inline label="Blue" type={type} id={`inline-${type}-1`} />
+            <Form.Check inline label="Black" type={type} id={`inline-${type}-2`} />
+            <Form.Check inline label="White" type={type} id={`inline-${type}-2`} />
+            <Form.Check inline label="Red" type={type} id={`inline-${type}-2`} />
+            <Form.Check inline label="Green" type={type} id={`inline-${type}-2`} />
+          </div>
+        ))}
+      </Form>
 
     </>
   );
