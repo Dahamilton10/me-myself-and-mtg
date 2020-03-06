@@ -17,13 +17,16 @@ function Home(props) {
 
   const [searchColors, setSearchColors] = useState('');
 
+  const []
+
   const { isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
 
   const getCards = async () => {
-    const response = Axios.get('/api/cards');
+    const response = await Axios.get('/api/cards');
     console.log(response);
+    setCardList(response.data);
   }
 
 
@@ -126,12 +129,14 @@ function Home(props) {
 
           searchColors={searchColors}
           setSearchColors={setSearchColors}
-          
+
           getCards={getCards}
           ></Search>
         </Col>
         <Col md='8'>
-          <CardDisplay></CardDisplay>
+          <CardDisplay
+          cardList={cardList}
+          ></CardDisplay>
         </Col>
         <Col md='2'>
          <DeckList></DeckList>

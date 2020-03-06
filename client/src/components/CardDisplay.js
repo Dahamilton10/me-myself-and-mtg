@@ -1,12 +1,17 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import CardItem from '../components/CardItem'
 
 export default function CardDisplay(props) {
   return (
     <>
-    <Container>
-      test
-    </Container>
-  </>
+      <ul className="list-group">
+        {props.cardList.map((card) =>
+          <CardItem
+            key={card.name}
+            card={card}
+          />
+        )}
+      </ul>
+    </>
   );
 }

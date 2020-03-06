@@ -8,9 +8,8 @@ router.get('/secrets', isAuthenticated, (req, res) => {
 
 router.get('/cards', (req, res) => {
   console.log('Hit GET /cards');
-  res.json('Hit GET /cards');
   mtg.card.find(3).then((result) => {
-    console.log(result.card.name);
+    res.send([result.card]);
   });
 });
 
