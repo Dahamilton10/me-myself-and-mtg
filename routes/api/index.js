@@ -8,8 +8,8 @@ router.get('/secrets', isAuthenticated, (req, res) => {
 
 router.get('/cards', (req, res) => {
   console.log('Hit GET /cards');
-  mtg.card.find(3).then((result) => {
-    res.send([result.card]);
+  mtg.card.where({ supertypes: 'legendary', subtypes: 'goblin' }).then((result) => {
+    res.send([result]);
   });
 });
 

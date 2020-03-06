@@ -16,9 +16,7 @@ function Home(props) {
   const [searchSet, setSearchSet] = useState('');
 
   const [searchColors, setSearchColors] = useState('');
-
-  const []
-
+  
   const { isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
