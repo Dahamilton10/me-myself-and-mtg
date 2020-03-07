@@ -6,17 +6,19 @@ router.get('/secrets', isAuthenticated, (req, res) => {
   res.json('Talk is cheap. Show me the code. -Linus Torvalds');
 });
 
-router.get('/cards', (req, res) => {
-  console.log('Hit GET /cards');
-  db.card.findAll({
+// Queries db for cards of a certain name
+router.get('/cards/:name', (req, res) => {
+  console.log('Hit GET /cards/:name');
+  db.Card.findAll({
     where: {
-      name: req.params.id,
+      name: req.params.name,
     },
   }).then((result) => {
     res.send([result]);
   });
 });
 
+// Creates a deck with a user id and the name of the deck
 router.post('/deck/:userid/:name', (req, res) => {
   db.deck.create({
     where: {
@@ -28,6 +30,7 @@ router.post('/deck/:userid/:name', (req, res) => {
   });
 });
 
+// Will pull the info for a deck, like decklist and name of deck.
 router.get('/deck/:id', (req, res) => {
   db.deck.findOne({
     where: {
@@ -38,6 +41,7 @@ router.get('/deck/:id', (req, res) => {
   });
 });
 
+// Deletes a deck by its id.
 router.delete('/deck/:id', (req, res) => {
   db.deck.destroy({
     where: {
@@ -48,10 +52,13 @@ router.delete('/deck/:id', (req, res) => {
   });
 });
 
+// eslint-disable-next-line max-len
+// Unsure if I will need to ever get info for a specific deckitem. I think I would just use get /deck/:id
 router.get('/deckitem/:id', (req, res) => {
   res.json('test');
 });
 
+// Adds a card to a deck, or updates the quantity of a card in a deck
 router.put('/deckitem/:id', (req, res) => {
   db.deckitem.update({
     where: {
@@ -62,6 +69,7 @@ router.put('/deckitem/:id', (req, res) => {
   });
 });
 
+// Should remove a card from a deck Or just decrement the quantity
 router.delete('/deckitem/:deckID/:cardID', (req, res) => {
   res.json('test');
 });

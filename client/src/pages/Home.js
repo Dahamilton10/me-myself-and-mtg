@@ -22,7 +22,7 @@ function Home(props) {
   const [secret, setSecret] = useState("");
 
   const getCards = async () => {
-    const response = await Axios.get('/api/cards');
+    const response = await Axios.get(`/api/cards/${searchName}`);
     console.log(response);
     setCardList(response.data);
   }

@@ -30,7 +30,7 @@ export default function Search(props) {
           onChange={(event) => props.setSearchSet(event.target.value)}
           value={props.searchSet}
         >
-          <option value="all">- Select Set-</option>
+          <option value="">- Select Set-</option>
           <option value="LEA">Alpha (Limited Edition)</option>
           <option value="LEB">Beta (Limited Edition)</option>
           <option value="2ED">Unlimited Edition</option>
@@ -252,7 +252,7 @@ export default function Search(props) {
         </select>
       </div>
 
-      <Form>
+      {/* <Form>
         {['checkbox'].map(type => (
           <div key={`inline-${type}`} className="mb-3">
             <Form.Check inline label="Blue" type={type} id={`inline-${type}-1`} />
@@ -262,7 +262,7 @@ export default function Search(props) {
             <Form.Check inline label="Green" type={type} id={`inline-${type}-2`} />
           </div>
         ))}
-      </Form>
+      </Form> */}
 
     </>
   );
