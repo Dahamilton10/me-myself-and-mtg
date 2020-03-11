@@ -11,20 +11,42 @@ function Home(props) {
 
   const [cardList, setCardList] = useState([]);
 
+  const [deckList, setDeckList] = useState([]);
+
+  const [deckID, setDeckID] = useState('');
+
   const [searchName, setSearchName] = useState('');
 
   const [searchSet, setSearchSet] = useState('');
 
   const [searchColors, setSearchColors] = useState('');
-  
-  const { isAuth, logout } = useContext(AuthContext);
+
+  const { user, isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
 
   const getCards = async () => {
     const response = await Axios.get(`/api/cards/${searchName}`);
-    console.log(response);
-    setCardList(response.data);
+    console.log(response.data[0]);
+    setCardList(response.data[0]);
+  }
+
+  const addDeckItem = async (cardID) => {
+    const response = await Axios.post(`/api/deckItem/${deckID}/${cardID}`);
+    console.log(response.data[0]);
+    setCardList(response.data[0]);
+  }
+
+  const getDeck = async () => {
+    const response = await Axios.get(`/api/cards/${deckID}`);
+    console.log(response.data);
+    setDeckList(response.data);
+  }
+
+  const removeCard = async (cardID) => {
+    const response = await Axios.delete(`/api/deckItem/${deckID}/${cardID}`);
+    console.log(response.data);
+    setDeckList(response.data);
   }
 
 
@@ -39,15 +61,15 @@ function Home(props) {
   return (
     <Container className="signup">
       <Row>
-        <Col md={{ span: 8, offset: 2 }}>
+        <Col>
           <Row
             className='display-inline-block'
           >
             <Col>
-              <h1>Logo</h1>
+              <h1>Me, Myself, and MTG</h1>
             </Col>
             <Col>
-              <h1>Home Page</h1>
+              <h1>Current Deck</h1>
             </Col>
             <Col>
               <Button>Manage</Button>
@@ -112,32 +134,36 @@ function Home(props) {
         </Col>
       </Row>
       <Row>
-        <Col md={{ span: 8, offset: 2 }}>
+        <Col>
           <h1>{secret}</h1>
         </Col>
       </Row>
       <Row>
         <Col md='2'>
           <Search
-          searchSet={searchSet}
-          setSearchSet={setSearchSet}
+            searchSet={searchSet}
+            setSearchSet={setSearchSet}
 
-          searchName={searchName}
-          setSearchName={setSearchName}
+            searchName={searchName}
+            setSearchName={setSearchName}
 
-          searchColors={searchColors}
-          setSearchColors={setSearchColors}
+            searchColors={searchColors}
+            setSearchColors={setSearchColors}
 
-          getCards={getCards}
+            getCards={getCards}
           ></Search>
         </Col>
         <Col md='8'>
           <CardDisplay
-          cardList={cardList}
+            cardList={cardList}
+            addDeckItem={addDeckItem}
           ></CardDisplay>
         </Col>
         <Col md='2'>
-         <DeckList></DeckList>
+          <DeckList
+            deckList={deckList}
+            removeCard={removeCard}
+          ></DeckList>
         </Col>
       </Row>
     </Container>

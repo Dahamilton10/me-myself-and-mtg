@@ -18,11 +18,6 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       unique: false,
     },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: false,
-    },
   });
 
   DeckItem.associate = function (models) {

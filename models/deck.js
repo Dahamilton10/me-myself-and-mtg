@@ -13,7 +13,7 @@ module.exports = function (sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true,
     },
-    Name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: false,

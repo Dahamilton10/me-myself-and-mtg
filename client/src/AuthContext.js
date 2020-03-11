@@ -5,31 +5,34 @@ import { Redirect } from 'react-router-dom'
 export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(false)
 
-    useEffect(() => {
-        checkAuth()
-    }, [])
+  const [user, setUser] = useState(null);
 
-    const checkAuth = async () => {
-        Axios.get('api/auth/user_data')
-            .then(response => {
-                if (response.data.email) {
-                    setIsAuth(true)
-                } else {
-                    setIsAuth(false)
-                }
-            })
-    }
+  useEffect(() => {
+    checkAuth()
+  }, [])
 
-    const logout = async () => {
-        Axios.get("/api/auth/logout")
-          .then(() => {
-            setIsAuth(false);
-            return <Redirect to='/' />
-          })
-          .catch(err => console.log(err));
-      };
+  const checkAuth = async () => {
+    Axios.get('api/auth/user_data')
+      .then(response => {
+        if (response.data.email) {
+          setIsAuth(true)
+          setUser(response.data)
+        } else {
+          setIsAuth(false)
+        }
+      })
+  }
 
-    return <AuthContext.Provider value={{ isAuth, setIsAuth, checkAuth, logout }}>{children}</AuthContext.Provider>;
+  const logout = async () => {
+    Axios.get("/api/auth/logout")
+      .then(() => {
+        setIsAuth(false);
+        return <Redirect to='/' />
+      })
+      .catch(err => console.log(err));
+  };
+
+  return <AuthContext.Provider value={{ isAuth, setIsAuth, checkAuth, logout, user }}>{children}</AuthContext.Provider>;
 };

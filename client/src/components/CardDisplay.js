@@ -7,7 +7,7 @@ export default function CardDisplay(props) {
       <ul className="list-group">
         {props.cardList.map((card) =>
           <CardItem
-            key={card.name}
+            key={card.id}
             card={card}
           />
         )}

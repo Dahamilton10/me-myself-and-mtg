@@ -8,7 +8,7 @@ router.get('/secrets', isAuthenticated, (req, res) => {
 
 // Queries db for cards of a certain name
 router.get('/cards/:name', (req, res) => {
-  console.log('Hit GET /cards/:name');
+  console.log(`Hit GET /cards/${req.params.name}`);
   db.Card.findAll({
     where: {
       name: req.params.name,
@@ -20,10 +20,19 @@ router.get('/cards/:name', (req, res) => {
 
 // Creates a deck with a user id and the name of the deck
 router.post('/deck/:userid/:name', (req, res) => {
-  db.deck.create({
+  db.Deck.create({
+    name: req.params.name,
+    UserId: req.params.userid,
+  }).then((result) => {
+    res.send([result]);
+  });
+});
+
+// Pulls all deck names and ids for a user
+router.get('/deck/:id', (req, res) => {
+  db.Deck.findAll({
     where: {
-      id: req.params.userid,
-      name: req.params.name,
+      id: req.params.id,
     },
   }).then((result) => {
     res.send([result]);
@@ -31,8 +40,8 @@ router.post('/deck/:userid/:name', (req, res) => {
 });
 
 // Will pull the info for a deck, like decklist and name of deck.
-router.get('/deck/:id', (req, res) => {
-  db.deck.findOne({
+router.get('/deckItem/:id', (req, res) => {
+  db.Deck.findAll({
     where: {
       id: req.params.id,
     },
@@ -43,7 +52,7 @@ router.get('/deck/:id', (req, res) => {
 
 // Deletes a deck by its id.
 router.delete('/deck/:id', (req, res) => {
-  db.deck.destroy({
+  db.Deck.destroy({
     where: {
       id: req.params.id,
     },
@@ -59,10 +68,11 @@ router.get('/deckitem/:id', (req, res) => {
 });
 
 // Adds a card to a deck, or updates the quantity of a card in a deck
-router.put('/deckitem/:id', (req, res) => {
-  db.deckitem.update({
+router.put('/deckitem/:deckID/:cardID', (req, res) => {
+  db.Deckitem.update({
     where: {
-      id: req.params.id,
+      deck_ID: req.params.deckID,
+      card_ID: req.params.cardID,
     },
   }).then((result) => {
     res.send([result]);
@@ -71,7 +81,14 @@ router.put('/deckitem/:id', (req, res) => {
 
 // Should remove a card from a deck Or just decrement the quantity
 router.delete('/deckitem/:deckID/:cardID', (req, res) => {
-  res.json('test');
+  db.DeckItem.destroy({
+    where: {
+      deck_ID: req.params.deckID,
+      card_ID: req.params.cardID,
+    },
+  }).then((result) => {
+    res.send([result]);
+  });
 });
 
 
