@@ -1,31 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 import "../App.css";
-import { Container, Row, Button, Col, InputGroup, FormControl } from "react-bootstrap";
+import { Container, Row, Button, Col, InputGroup, FormControl, DropdownButton } from "react-bootstrap";
 import Axios from "axios";
 import CardDisplay from '../components/CardDisplay';
 import Search from '../components/Search';
 import DeckList from '../components/DeckList';
+import DecksListItem from '../components/DecksListItem';
 
 function Home(props) {
 
+  // an array of cards that are querried by the user
   const [cardList, setCardList] = useState([]);
 
+  // a list of decks for a user
   const [decks, setDecks] = useState([]);
 
   // deckList is a list of cards in a deck NOT A LIST OF DECKS
   const [deckList, setDeckList] = useState([]);
 
+  // the id of the currently selected deck
   const [deckID, setDeckID] = useState('');
 
+  // the name of the currently selected deck
   const [deckName, setDeckName] = useState('');
 
+  // the value of the search input
   const [searchName, setSearchName] = useState('');
 
+  // the value of the search via set option
   const [searchSet, setSearchSet] = useState('');
 
+  // the search values for colors
   const [searchColors, setSearchColors] = useState('');
 
+  // values for the user and whether or not theyre logged in
   const { user, isAuth, logout } = useContext(AuthContext);
 
   const [secret, setSecret] = useState("");
@@ -53,6 +62,12 @@ function Home(props) {
     setDecks(response.data);
   }
 
+  useEffect(() => {
+    getDecks();
+  }, []);
+
+
+
   // function to add a card to a deck
   const addDeckItem = async (cardID) => {
     const response = await Axios.post(`/api/deckItem/${deckID}/${cardID}`);
@@ -61,12 +76,11 @@ function Home(props) {
   }
 
   // function to get all deckItems with a specified deckID
-  const getDeck = async () => {
+  const getDeckItems = async () => {
     const response = await Axios.get(`/api/deckItem/${deckID}`);
     console.log(response.data);
     setDeckList(response.data);
   }
-
 
   // removes a card from a deck
   const removeCard = async (cardID) => {
@@ -98,7 +112,14 @@ function Home(props) {
               <h1>Current Deck</h1>
             </Col>
             <Col>
-              <Button>Manage</Button>
+              <DropdownButton id="current-deck" title={deckName}>
+                {decks.map((deck) =>
+                  <DecksListItem
+                    key={deck.id}
+                    decks={decks}
+                  />
+                )}
+              </DropdownButton>
               <InputGroup className='mb-3'>
                 <InputGroup.Prepend>
                   <Button
