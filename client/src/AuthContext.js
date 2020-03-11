@@ -34,5 +34,5 @@ export const AuthProvider = ({ children }) => {
       .catch(err => console.log(err));
   };
 
-  return <AuthContext.Provider value={{ isAuth, setIsAuth, checkAuth, logout, user }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ isAuth, setIsAuth, checkAuth, logout, user, setUser }}>{children}</AuthContext.Provider>;
 };

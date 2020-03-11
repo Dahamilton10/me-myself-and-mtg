@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 const LoginForm = props => {
 
-    const { setIsAuth } = useContext(AuthContext)
+    const { setIsAuth, setUser } = useContext(AuthContext)
     const emptyCreds = { emailInput: '', passwordInput: '' }
     const errorMessage = 'invalid credentials'
     const [formData, setFormData] = useState(emptyCreds)
@@ -33,6 +33,7 @@ const LoginForm = props => {
             .then(user => {
                 console.log("login response ", user)
                 setIsAuth(true)
+                setUser(user.data)
             })
             .catch(err => {
                 setCredsAreInvalid(errorMessage)
