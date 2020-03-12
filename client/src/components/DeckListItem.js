@@ -2,21 +2,19 @@
 // up on the left hand side of the page
 
 import React from 'react';
+import { Button, } from 'react-bootstrap';
 
 export default function DeckList(props) {
   return (
     <>
-      <li className="list-group-item">
-        <div className="row">
-          <div className="col-8">
-          </div>
-          <div className="col-4 text-right">
-            <button
-              onClick={() => props.removeCard(props.deckList.id)}
-              className="btn btn-danger btn-sm">-</button>
-          </div>
-        </div>
-      </li>
+      <tr>
+        <th scope="row">1</th>
+        <td>{props.deckListItem.name}</td>
+        <td>{props.deckListItem.CMC}</td>
+        <td><Button
+          onClick={() => props.removeCard(props.deckList.id)}
+          className="btn btn-danger btn-sm">-</Button></td>
+      </tr>
     </>
 
   );

@@ -53,6 +53,7 @@ function Home(props) {
     console.log(response.data);
     console.log('Getting all decks for current user');
     await getDecks();
+    console.log('Got decks');
   }
 
   // function to get deck data for a user
@@ -62,9 +63,10 @@ function Home(props) {
     setDecks(response.data);
   }
 
+  // This is a function to grab the decks of a user on update of the user state
   useEffect(() => {
     getDecks();
-  }, []);
+  }, [user]);
 
 
 
