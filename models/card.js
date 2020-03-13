@@ -7,7 +7,7 @@
 module.exports = function (sequelize, DataTypes) {
   const Card = sequelize.define('Card', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       primaryKey: true,
@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       unique: false,
     },
-    isOriginal: {
+    cmc: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: false,
