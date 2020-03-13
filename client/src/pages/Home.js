@@ -41,9 +41,9 @@ function Home(props) {
 
   // search by name for a card
   const getCards = async () => {
-    const response = await Axios.get(`/api/cards/${searchName}`);
+    let response = await Axios.get(`/api/cards/${searchName}`);
     console.log(response.data[0]);
-    setCardList(response.data[0]);
+    setCardList(response.data[0].reverse());
   }
 
   // function to add a deck
@@ -58,15 +58,19 @@ function Home(props) {
 
   // function to get deck data for a user
   const getDecks = async () => {
-    const response = await Axios.get(`/api/deck/${user.id}`);
-    console.log(response.data);
-    setDecks(response.data);
+    if (user.id == null) {
+      const response = await Axios.get(`/api/deck/${user.id}`);
+      console.log(response.data);
+      setDecks(response.data);
+    } else {
+      console.log('No user id');
+    }
   }
 
   // This is a function to grab the decks of a user on update of the user state
-  useEffect(() => {
-    getDecks();
-  }, [user]);
+  // useEffect(() => {
+  //   getDecks();
+  // }, [user]);
 
 
 
@@ -101,11 +105,12 @@ function Home(props) {
   };
 
   return (
-    <Container className="signup">
+    <Container fluid className="signup" id='wholeThing'>
       <Row>
         <Col>
           <Row
             className='display-inline-block'
+            id='head'
           >
             <Col>
               <h1>Me, Myself, and MTG</h1>
@@ -114,7 +119,10 @@ function Home(props) {
               <h1>Current Deck</h1>
             </Col>
             <Col>
-              <DropdownButton id="current-deck" title={deckName}>
+              <DropdownButton
+              variant='secondary'
+              id="current-deck" 
+              title={deckName}>
                 {decks.map((deck) =>
                   <DecksListItem
                     key={deck.id}
@@ -140,10 +148,11 @@ function Home(props) {
                 </FormControl>
               </InputGroup>
             </Col>
-            <Col>
+            <Col xs='auto'>
               {isAuth ? (
                 <>
                   <Button
+                    variant='secondary'
                     className="m-1"
                     onClick={e => {
                       e.preventDefault();
@@ -154,6 +163,7 @@ function Home(props) {
                     Logout
               </Button>
                   <Button
+                    variant='secondary'
                     className="m-1"
                     onClick={e => {
                       e.preventDefault();
@@ -166,6 +176,7 @@ function Home(props) {
               ) : (
                   <>
                     <Button
+                      variant='secondary'
                       className="m-1"
                       onClick={e => {
                         e.preventDefault();
@@ -175,6 +186,7 @@ function Home(props) {
                       Login
               </Button>
                     <Button
+                      variant='secondary'
                       className="m-1"
                       onClick={e => {
                         e.preventDefault();
@@ -187,15 +199,6 @@ function Home(props) {
                 )}
             </Col>
           </Row>
-          <Button
-            className="m-1"
-            onClick={e => {
-              e.preventDefault();
-              getSecret();
-            }}
-          >
-            Show Secrets
-          </Button>
         </Col>
       </Row>
       <Row>

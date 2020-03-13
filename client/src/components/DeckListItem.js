@@ -16,6 +16,5 @@ export default function DeckList(props) {
           className="btn btn-danger btn-sm">-</Button></td>
       </tr>
     </>
-
   );
 }

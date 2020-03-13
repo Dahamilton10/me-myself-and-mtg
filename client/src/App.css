@@ -3,6 +3,23 @@
 }
 
 body {
+  background-color: #1C2833;
+  color: #fff;
+}
+
+#wholeThing {
+  margin: 0px;
+}
+
+#head {
+  background-color: #17202A;
+}
+
+.card-body {
   background-color: #1a1919;
-  color: #999;
+}
+
+.card {
+  display: inline-flex;
+  background-color: #1a1919;
 }

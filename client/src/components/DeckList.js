@@ -11,6 +11,7 @@ export default function DeckList(props) {
         <tr>
           <th scope="col">Name</th>
           <th scope="col">CMC</th>
+          <th scope="col">Remove</th>
         </tr>
       </thead>
       <tbody>
