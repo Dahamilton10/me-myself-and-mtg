@@ -16,6 +16,9 @@ function Home(props) {
   // a list of decks for a user
   const [decks, setDecks] = useState([]);
 
+  // The currently selected deck for editing
+  const [currentDeck, setCurrentDeck] = useState([]);
+
   // deckList is a list of cards in a deck NOT A LIST OF DECKS
   const [deckList, setDeckList] = useState([]);
 
@@ -58,7 +61,7 @@ function Home(props) {
 
   // function to get deck data for a user
   const getDecks = async () => {
-    if (user.id == null) {
+    if (user.id !== null) {
       const response = await Axios.get(`/api/deck/${user.id}`);
       console.log(response.data);
       setDecks(response.data);
@@ -67,6 +70,7 @@ function Home(props) {
     }
   }
 
+  // This function breaks the app and I dont know why :)
   // This is a function to grab the decks of a user on update of the user state
   // useEffect(() => {
   //   getDecks();
@@ -119,17 +123,6 @@ function Home(props) {
               <h1>Current Deck</h1>
             </Col>
             <Col>
-              <DropdownButton
-              variant='secondary'
-              id="current-deck" 
-              title={deckName}>
-                {decks.map((deck) =>
-                  <DecksListItem
-                    key={deck.id}
-                    decks={decks}
-                  />
-                )}
-              </DropdownButton>
               <InputGroup className='mb-3'>
                 <InputGroup.Prepend>
                   <Button
@@ -147,6 +140,23 @@ function Home(props) {
                 >
                 </FormControl>
               </InputGroup>
+              <DropdownButton
+                onClick={e => {
+                  e.preventDefault();
+                  getDecks()
+                }}
+                variant='secondary'
+                id="current-deck"
+                title={deckName}>
+                {decks.map((deck) =>
+                  <DecksListItem
+                    key={deck.id}
+                    decks={decks}
+                    deckList={deckList}
+                    getDeckItems={getDeckItems}
+                  />
+                )}
+              </DropdownButton>
             </Col>
             <Col xs='auto'>
               {isAuth ? (

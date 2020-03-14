@@ -4,17 +4,18 @@
 import React from 'react';
 import { Button, } from 'react-bootstrap';
 
+const divStyle = {
+  // backgroundImage : url(`../pics/${props.deckListItem.SetCode}/${props.deckListItem.id}.jpg`)
+};
+
 export default function DeckList(props) {
   return (
-    <>
-      <tr>
-        <th scope="row">1</th>
-        <td>{props.deckListItem.name}</td>
-        <td>{props.deckListItem.CMC}</td>
-        <td><Button
-          onClick={() => props.removeCard(props.deckList.id)}
-          className="btn btn-danger btn-sm">-</Button></td>
-      </tr>
-    </>
+    <div
+      className='deckListItem'
+      style={divStyle}
+      onClick={() => props.removeCard(props.deckList.id)}
+      >
+    </div>
   );
 }
+

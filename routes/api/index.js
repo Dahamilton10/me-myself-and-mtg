@@ -32,7 +32,7 @@ router.post('/deck/:userid/:name', (req, res) => {
 router.get('/deck/:id', (req, res) => {
   db.Deck.findAll({
     where: {
-      id: req.params.id,
+      UserId: req.params.id,
     },
   }).then((result) => {
     res.send([result]);
