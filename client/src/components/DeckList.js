@@ -6,22 +6,14 @@ import { Table } from 'react-bootstrap';
 
 export default function DeckList(props) {
   return (
-    <Table variant='dark'>
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">CMC</th>
-          <th scope="col">Remove</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div>
         {props.deckList.map((deckListItem) =>
           <DeckListItem
+            key={deckListItem.id}
             deckList={deckListItem}
             removeCard={props.removeCard}
           />
         )}
-      </tbody>
-    </Table>
+    </div>
   );
 }

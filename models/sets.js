@@ -36,5 +36,13 @@ module.exports = function (sequelize, DataTypes) {
     });
   };
 
+  Set.associate = function (models) {
+    Set.hasMany(models.DeckItem, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
   return Set;
 };

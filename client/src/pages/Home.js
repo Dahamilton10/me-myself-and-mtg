@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 import "../App.css";
-import { Container, Row, Button, Col, InputGroup, FormControl, DropdownButton } from "react-bootstrap";
+import { Container, Row, Button, Col, InputGroup, FormControl, DropdownButton, Dropdown } from "react-bootstrap";
 import Axios from "axios";
 import CardDisplay from '../components/CardDisplay';
 import Search from '../components/Search';
@@ -17,13 +17,13 @@ function Home(props) {
   const [decks, setDecks] = useState([]);
 
   // The currently selected deck for editing
-  const [currentDeck, setCurrentDeck] = useState([]);
+  const [currentDeckName, setCurrentDeckName] = useState('Select a deck');
 
   // deckList is a list of cards in a deck NOT A LIST OF DECKS
   const [deckList, setDeckList] = useState([]);
 
   // the id of the currently selected deck
-  const [deckID, setDeckID] = useState('');
+  const [deckID, setDeckID] = useState('1');
 
   // the name of the currently selected deck
   const [deckName, setDeckName] = useState('');
@@ -61,13 +61,20 @@ function Home(props) {
 
   // function to get deck data for a user
   const getDecks = async () => {
-    if (user.id !== null) {
-      const response = await Axios.get(`/api/deck/${user.id}`);
-      console.log(response.data);
-      setDecks(response.data);
-    } else {
-      console.log('No user id');
-    }
+    const response = await Axios.get(`/api/deck/${user.id}`);
+    console.log(response.data);
+    setDecks(response.data[0]);
+  }
+
+  // this is the function we call when a dropdown item is clicked
+  const dropDownFunction = async (e) => {
+    // set currentdeckname
+    // get card list for deck
+    // set the deck id
+    setCurrentDeckName(e.name);
+    setDeckID(e.id);
+    await getDeckItems()
+
   }
 
   // This function breaks the app and I dont know why :)
@@ -89,7 +96,7 @@ function Home(props) {
   const getDeckItems = async () => {
     const response = await Axios.get(`/api/deckItem/${deckID}`);
     console.log(response.data);
-    setDeckList(response.data);
+    setDeckList(response.data[0]);
   }
 
   // removes a card from a deck
@@ -120,7 +127,7 @@ function Home(props) {
               <h1>Me, Myself, and MTG</h1>
             </Col>
             <Col>
-              <h1>Current Deck</h1>
+              <h1>{currentDeckName}</h1>
             </Col>
             <Col>
               <InputGroup className='mb-3'>
@@ -140,23 +147,30 @@ function Home(props) {
                 >
                 </FormControl>
               </InputGroup>
-              <DropdownButton
-                onClick={e => {
-                  e.preventDefault();
-                  getDecks()
-                }}
-                variant='secondary'
-                id="current-deck"
-                title={deckName}>
-                {decks.map((deck) =>
-                  <DecksListItem
-                    key={deck.id}
-                    decks={decks}
-                    deckList={deckList}
-                    getDeckItems={getDeckItems}
-                  />
-                )}
-              </DropdownButton>
+              <Row>
+                <Dropdown>
+                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    Select a deck
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {decks.map((deck) =>
+                      <DecksListItem
+                        key={deck.id}
+                        decks={decks}
+                        deck={deck}
+                        deckList={deckList}
+                        dropDownFunction={dropDownFunction}
+                      />
+                    )}
+                  </Dropdown.Menu>
+                </Dropdown>
+                <Button
+                  variant='secondary'
+                  onClick={getDecks}
+                >
+                  Load Decks
+              </Button>
+              </Row>
             </Col>
             <Col xs='auto'>
               {isAuth ? (

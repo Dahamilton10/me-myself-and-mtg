@@ -41,9 +41,9 @@ router.get('/deck/:id', (req, res) => {
 
 // Will pull the info for a deck, like decklist and name of deck.
 router.get('/deckItem/:id', (req, res) => {
-  db.Deck.findAll({
+  db.DeckItem.findAll({
     where: {
-      id: req.params.id,
+      DeckId: req.params.id,
     },
   }).then((result) => {
     res.send([result]);
@@ -61,19 +61,12 @@ router.delete('/deck/:id', (req, res) => {
   });
 });
 
-// eslint-disable-next-line max-len
-// Unsure if I will need to ever get info for a specific deckitem. I think I would just use get /deck/:id
-router.get('/deckitem/:id', (req, res) => {
-  res.json('test');
-});
-
 // Adds a card to a deck, or updates the quantity of a card in a deck
-router.put('/deckitem/:deckID/:cardID', (req, res) => {
-  db.Deckitem.update({
-    where: {
-      deck_ID: req.params.deckID,
-      card_ID: req.params.cardID,
-    },
+router.put('/deckitem/:deckID/:cardID/:SetCode', (req, res) => {
+  db.DeckItem.create({
+    DeckId: req.params.deckID,
+    CardId: req.params.cardID,
+    SetCode: req.params.SetCode,
   }).then((result) => {
     res.send([result]);
   });

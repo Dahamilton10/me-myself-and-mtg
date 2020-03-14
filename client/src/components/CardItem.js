@@ -7,7 +7,7 @@ export default function CardItem(props) {
     <Card style={{ width: '18rem' }}>
       <Card.Img
         variant="top"
-        src={`../pics/${props.card.SetCode}/${props.card.id}.jpg`}
+        src={`${process.env.PUBLIC_URL}/pics/${props.card.SetCode}/${props.card.id}.jpg`}
         onClick={props.addDeckItem}
       />
     </Card>

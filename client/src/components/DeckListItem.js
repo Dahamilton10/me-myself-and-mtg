@@ -4,15 +4,11 @@
 import React from 'react';
 import { Button, } from 'react-bootstrap';
 
-const divStyle = {
-  // backgroundImage : url(`../pics/${props.deckListItem.SetCode}/${props.deckListItem.id}.jpg`)
-};
-
 export default function DeckList(props) {
   return (
     <div
       className='deckListItem'
-      style={divStyle}
+      style={{backgroundImage: `url(${process.env.PUBLIC_URL}/pics/${props.deckList.SetCode}/${props.deckList.CardId}.jpg)`}}
       onClick={() => props.removeCard(props.deckList.id)}
       >
     </div>

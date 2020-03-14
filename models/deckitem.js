@@ -6,22 +6,21 @@
 // It will also have an id that ties to the deck table
 // will also have a colomn for quantity to consolidate entries.
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function (sequelize) {
   const DeckItem = sequelize.define('DeckItem', {
-    deck_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: false,
-    },
-    card_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: false,
-    },
+
   });
 
   DeckItem.associate = function (models) {
     DeckItem.belongsTo(models.Deck, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
+
+  DeckItem.associate = function (models) {
+    DeckItem.belongsTo(models.Set, {
       foreignKey: {
         allowNull: false,
       },

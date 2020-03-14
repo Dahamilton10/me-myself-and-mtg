@@ -2,7 +2,7 @@ import React from 'react';
 import CardItem from '../components/CardItem'
 import { Col, Container } from 'react-bootstrap';
 
-export default function CardDisplay(props) {
+export default function CardDisplay(props) { 
   return (
     <>
       <Col>
